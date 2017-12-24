@@ -77,6 +77,17 @@ class BaseIRPyEvaluator(object):
     getelementptr = get_element_ptr
 
     #############################
+    # Aggregate Ops
+    #############################
+    def extract_value(*args):
+        raise NotImplementedError()
+
+    def insert_value(*args):
+        raise NotImplementedError()
+    extractvalue = extract_value
+    insertvalue = insert_value
+
+    #############################
     # Cast Ops
     #############################
     def trunc(self, ctx, return_type, a, atype):
