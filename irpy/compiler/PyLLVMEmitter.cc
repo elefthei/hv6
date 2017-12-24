@@ -226,7 +226,8 @@ class PyInstVisitor : public llvm::InstVisitor<PyInstVisitor>
             return genPyCall("asm", {quote(ia->getAsmString())});
         }
 #if !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
-        val->dump();
+	val->print(llvm::errs());
+	llvm::errs() << "\n";
 #endif
         llvm::report_fatal_error("Unhandled value");
     }
@@ -251,7 +252,8 @@ class PyInstVisitor : public llvm::InstVisitor<PyInstVisitor>
             return genPyCall("constant_aggregate_zero", {nameType(ca), quote(name(ca))});
         } else {
 #if !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
-            c->dump();
+	    c->print(llvm::errs());
+	    llvm::errs() << "\n";
 #endif
             llvm::report_fatal_error("Unknown constant type");
         }
@@ -309,7 +311,8 @@ class PyInstVisitor : public llvm::InstVisitor<PyInstVisitor>
                 break;
             default:
 #if !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
-                e->dump();
+		e->print(llvm::errs());
+		llvm::errs() << "\n";
 #endif
                 llvm::report_fatal_error("Unknown icmp predicate");
             }
@@ -329,7 +332,8 @@ class PyInstVisitor : public llvm::InstVisitor<PyInstVisitor>
             break;
         default:
 #if !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
-            i.dump();
+            i.print(llvm::errs());
+	    llvm::errs() << "\n";
 #endif
             llvm::report_fatal_error(">= 2 return operands");
         }
@@ -403,7 +407,8 @@ class PyInstVisitor : public llvm::InstVisitor<PyInstVisitor>
             break;
         default:
 #if !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
-            i.dump();
+            i.print(llvm::errs());
+	    llvm::errs() << "\n";
 #endif
             llvm::report_fatal_error("Unhandled predicate");
         }
@@ -532,6 +537,13 @@ class PyInstVisitor : public llvm::InstVisitor<PyInstVisitor>
         genPyCallFromInstruction(true, "get_element_ptr", i, kwargs);
     }
 
+    void visitExtractValueInst(const llvm::ExtractValueInst &i)
+    {
+        kwargs_t kwargs;
+        genPyCallFromInstruction(true, "extract_value", i, kwargs);
+    }
+
+
     void visitSwitchInst(const llvm::SwitchInst &i)
     {
         args_t args;
@@ -582,7 +594,8 @@ class PyInstVisitor : public llvm::InstVisitor<PyInstVisitor>
     void visitInstruction(const llvm::Instruction &i)
     {
 #if !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
-        i.dump();
+	i.print(llvm::errs());
+	llvm::errs() << "\n";
 #endif
         llvm::report_fatal_error("Unhandled instruction class");
     }
