@@ -225,7 +225,7 @@ class PyInstVisitor : public llvm::InstVisitor<PyInstVisitor>
         } else if (const llvm::InlineAsm *ia = llvm::dyn_cast<llvm::InlineAsm>(val)) {
             return genPyCall("asm", {quote(ia->getAsmString())});
         }
-#if !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
+#if defined(LLVM_ENABLE_DUMP)
 	val->print(llvm::errs());
 	llvm::errs() << "\n";
 #endif
@@ -251,7 +251,7 @@ class PyInstVisitor : public llvm::InstVisitor<PyInstVisitor>
         } else if (auto ca = llvm::dyn_cast<llvm::ConstantAggregateZero>(c)) {
             return genPyCall("constant_aggregate_zero", {nameType(ca), quote(name(ca))});
         } else {
-#if !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
+#if defined(LLVM_ENABLE_DUMP)
 	    c->print(llvm::errs());
 	    llvm::errs() << "\n";
 #endif
@@ -310,7 +310,7 @@ class PyInstVisitor : public llvm::InstVisitor<PyInstVisitor>
                 opstring = "uge";
                 break;
             default:
-#if !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
+#if defined(LLVM_ENABLE_DUMP)
 		e->print(llvm::errs());
 		llvm::errs() << "\n";
 #endif
@@ -331,7 +331,7 @@ class PyInstVisitor : public llvm::InstVisitor<PyInstVisitor>
             emitter_.line("return " + get(i.getOperand(0)));
             break;
         default:
-#if !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
+#if defined(LLVM_ENABLE_DUMP)
             i.print(llvm::errs());
 	    llvm::errs() << "\n";
 #endif
@@ -406,7 +406,7 @@ class PyInstVisitor : public llvm::InstVisitor<PyInstVisitor>
             opstring = "uge";
             break;
         default:
-#if !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
+#if defined(LLVM_ENABLE_DUMP)
             i.print(llvm::errs());
 	    llvm::errs() << "\n";
 #endif
@@ -593,7 +593,7 @@ class PyInstVisitor : public llvm::InstVisitor<PyInstVisitor>
 
     void visitInstruction(const llvm::Instruction &i)
     {
-#if !defined(NDEBUG) || defined(LLVM_ENABLE_DUMP)
+#if defined(LLVM_ENABLE_DUMP)
 	i.print(llvm::errs());
 	llvm::errs() << "\n";
 #endif

@@ -39,6 +39,10 @@ int main(int argc, char **argv)
         return 3;
     }
 
+    #if defined(LLVM_ENABLE_DUMP)
+    std::cerr << "Dumping unhandled LLVM IR" << std::endl;
+    #endif
+
     std::clock_t parsedone = std::clock();
     std::cerr << "Parsing took " << cycles_to_ms(parsedone - start) << " ms." << std::endl;
 
