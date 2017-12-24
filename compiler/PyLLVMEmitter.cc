@@ -539,14 +539,12 @@ class PyInstVisitor : public llvm::InstVisitor<PyInstVisitor>
 
     void visitExtractValueInst(const llvm::ExtractValueInst &i)
     {
-        kwargs_t kwargs;
-        genPyCallFromInstruction(true, "extract_value", i, kwargs);
+        genPyCallFromInstruction(true, "extract_value", i);
     }
 
     void visitInsertValueInst(const llvm::InsertValueInst &i)
     {
-        kwargs_t kwargs;
-        genPyCallFromInstruction(true, "insert_value", i, kwargs);
+        genPyCallFromInstruction(true, "insert_value", i);
     }
 
 

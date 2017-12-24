@@ -76,15 +76,15 @@ TEST_LIBIRPY_PY := $(addprefix o.test/,$(LIBIRPY_PY:%=%))
 
 o.test/%_0.ll: test/%.c
 	$(Q)$(MKDIR_P) $(@D)
-	$(CLANG) -g -mno-sse -mno-sse2 -nostdlib -O0 -S -emit-llvm "$^" -o "$@"
+	$(CLANG) -mno-sse -mno-sse2 -nostdlib -O0 -S -emit-llvm "$^" -o "$@"
 
 o.test/%_1.ll: test/%.c
 	$(Q)$(MKDIR_P) $(@D)
-	$(CLANG) -g -mno-sse -mno-sse2 -nostdlib -O1 -S -emit-llvm "$^" -o "$@"
+	$(CLANG) -mno-sse -mno-sse2 -nostdlib -O1 -S -emit-llvm "$^" -o "$@"
 
 o.test/%_2.ll: test/%.c
 	$(Q)$(MKDIR_P) $(@D)
-	$(CLANG) -g -mno-sse -mno-sse2 -nostdlib -O2 -S -emit-llvm "$^" -o "$@"
+	$(CLANG) -mno-sse -mno-sse2 -nostdlib -O2 -S -emit-llvm "$^" -o "$@"
 
 o.test/%_0: test/%.c
 	$(Q)$(MKDIR_P) $(@D)

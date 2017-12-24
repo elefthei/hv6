@@ -79,7 +79,15 @@ class ValueType(Type):
         raise ValueError("Can not dereference a value type")
 
 
-class CompositeValueType(ValueType):
+class AggregateValueType(ValueType):
+    def is_aggregate(self):
+        return True
+
+    def length(self):
+        raise NotImplementedError()
+
+
+class CompositeValueType(AggregateValueType):
     def is_composite(self):
         return True
 
@@ -135,6 +143,9 @@ class StructType(CompositeValueType):
             return self._size
         else:
             return sum([s.size() for s in self._fields])
+
+    def length(self):
+        return len(self._fields)
 
     def fields(self):
         return self._fields
@@ -210,6 +221,9 @@ class FunctionType(CompositeValueType):
 
     def is_function(self):
         return True
+
+    def is_aggregate(self):
+        return False
 
     def return_type(self):
         return self._return_type

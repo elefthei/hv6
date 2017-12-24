@@ -280,11 +280,9 @@ class Z3IRPyEval(BaseZ3IRPyEval):
     #############################
     # Aggregate Ops
     #############################
-    def extract_value(self, ctx, target, target_type, idx, *args, **kwargs):
-        print "=========== In extract value: Target type"
-        print target_type
-        assert idx < len(target_type)
-        return_type = target_type[idx]
+    def extract_value(self, ctx, target, idx, *args, **kwargs):
+        assert target.is_aggregate()
+        assert idx < target.length()
         return target.extractvalue(ctx, *list(args)[::2], type=return_type)
     extractvalue = extract_value
 
